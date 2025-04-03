@@ -112,15 +112,35 @@ const generateOtp = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { fullName, username, email, password, role, college, otp } = req.body;
+  const {
+    fullName,
+    username,
+    email,
+    password,
+    confirmPassword,
+    role,
+    college,
+    otp,
+  } = req.body;
 
   // 🔹 Validate required fields
   if (
-    [fullName, username, email, password, role, college, otp].some(
-      (field) => !field?.trim()
-    )
+    [
+      fullName,
+      username,
+      email,
+      password,
+      confirmPassword,
+      role,
+      college,
+      otp,
+    ].some((field) => !field?.trim())
   ) {
     throw new ApiError(400, "All fields are required, including OTP");
+  }
+
+  if (password != confirmPassword) {
+    throw new ApiError(400, "Both password should be same");
   }
 
   // 🔹 Verify OTP
