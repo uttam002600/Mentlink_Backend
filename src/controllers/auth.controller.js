@@ -33,6 +33,32 @@ const generateAccessAndRefreshToken = async (userId) => {
   }
 };
 
+const checkUsername = asyncHandler(async (req, res) => {
+  try {
+    const { username } = req.query; // Use query parameters as per frontend
+
+    // 🔹 Validate if username is provided
+    // if (!username?.trim()) {
+    //   throw new ApiError(400, "Username is required");
+    // }
+
+    // 🔹 Check if the username exists in the database
+    const existingUser = await User.findOne({
+      username: username.toLowerCase(),
+    });
+
+    return res.status(200).json({
+      success: true,
+      available: !existingUser, // `true` if username is available, `false` if taken
+      message: existingUser
+        ? "Username already taken"
+        : "Username is available",
+    });
+  } catch (error) {
+    throw new ApiError(500, "Error checking username availability");
+  }
+});
+
 const generateOtp = asyncHandler(async (req, res) => {
   try {
     //* Fetch the email from req.body
@@ -332,6 +358,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 export {
   generateOtp,
   registerUser,
+  checkUsername,
   loginUser,
   logOutUser,
   refreshAccessToken,

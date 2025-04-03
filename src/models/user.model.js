@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
     },
     password: { type: String, required: true },
     avatar: { type: String, required: false }, // Cloudinary URL
-    role: { type: String, enum: ["MENTOR", "MENTEE", "ADMIN"], required: true },
+    role: { type: String, enum: ["MENTOR", "MENTEE"], required: true },
     college: { type: String, required: false },
 
     // 🔹 Common Field: Domain of Interest (for Mentees)
