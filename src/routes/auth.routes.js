@@ -14,21 +14,19 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 // import { verify } from "jsonwebtoken";
 
 const router = Router();
+// upload.fields([
+//   {
+//     name: "avatar",
+//     maxCount: 1,
+//   },
+//   {
+//     name: "coverImage",
+//     maxCount: 1,
+//   },
+// ]),
 
 //AUTHENTICATION
-router.route("/register").post(
-  upload.fields([
-    {
-      name: "avatar",
-      maxCount: 1,
-    },
-    {
-      name: "coverImage",
-      maxCount: 1,
-    },
-  ]),
-  registerUser
-);
+router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/send-otp").post(generateOtp);
 router.route("/check-username").get(checkUsername);
