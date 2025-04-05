@@ -144,9 +144,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // 🔹 Verify OTP
-  const otpRecord = await OTP.findOne({ email, otp });
+  const otpRecord = await OTP.findOne({ email }).sort({ createdAt: -1 });
 
-  if (!otpRecord) {
+  if (!otpRecord || otpRecord.otp !== otp) {
     throw new ApiError(400, "Invalid or expired OTP");
   }
 
