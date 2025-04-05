@@ -22,10 +22,13 @@ app.use(cookieParser());
 // routes import
 import authUser from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import globalErrorHandler from "./middlewares/errorhandler.middleware.js";
 
 // routes declaration
 app.use("/api/v1/auth", authUser);
 app.use("/api/v1/users", userRouter);
 // https://localhost:8000/api/v1/users/xyz
+
+app.use(globalErrorHandler);
 
 export { app };
